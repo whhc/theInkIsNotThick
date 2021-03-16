@@ -1,45 +1,34 @@
-import React, { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { Button } from '@material-ui/core';
+import React from 'react';
+import { Route, Switch, useHistory } from 'react-router';
+import ArticlesPage from './pages/articles';
+import ArticlePage from './pages/article';
+import UserPage from './pages/user';
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  let history = useHistory();
+  const routerTo = (path: string) => {
+    history.push(path);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+      <Button onClick={() => routerTo('/user')}>USER</Button>
+      <Button onClick={() => routerTo('/articles')}>ARTICLES</Button>
+      <div>
+        <Switch>
+          <Route path={`/articles`}>
+            <ArticlesPage />
+          </Route>
+          <Route path={`/article/:articleId`}>
+            <ArticlePage />
+          </Route>
+          <Route path={`/user`}>
+            <UserPage />
+          </Route>
+        </Switch>
+      </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

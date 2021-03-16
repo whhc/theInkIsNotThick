@@ -17,4 +17,17 @@ export class ArticleService {
   async findAll(): Promise<Article[]> {
     return this.articleModel.find().exec();
   }
+
+  async deleteArticle(id) {
+    return this.articleModel.findByIdAndDelete(id);
+    // return (await this.articleModel.findById(id)).delete();
+  }
+
+  async findById(id) {
+    return this.articleModel.findById(id);
+  }
+
+  async updateArticle(id, data) {
+    return this.articleModel.findByIdAndUpdate(id, data);
+  }
 }
