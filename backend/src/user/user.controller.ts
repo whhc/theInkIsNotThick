@@ -1,13 +1,16 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { CreateUserDto } from 'src/dto/user.dto';
 import { UserService } from './user.service';
 
 @ApiTags('user')
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
+
   @Post()
-  async createUser(@Body() createUserDto) {
+  @ApiBody({ type: CreateUserDto })
+  async createUser(@Body() createUserDto: CreateUserDto) {
     return await this.userService.createUser(createUserDto);
   }
 

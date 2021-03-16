@@ -10,10 +10,10 @@ import {
 import {
   ApiBody,
   ApiCreatedResponse,
-  ApiHeader,
+  // ApiHeader,
   ApiOperation,
   ApiParam,
-  ApiResponse,
+  // ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { CreateArticleDto } from 'src/dto/article.dto';
