@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  UseFilters,
 } from '@nestjs/common';
 import {
   ApiBody,
@@ -17,6 +18,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { CreateArticleDto } from 'src/dto/article.dto';
+import { HttpExceptionFilter } from 'src/filters/http-exception.filter';
 import { Article } from 'src/schemas/article.schema';
 import { ArticleService } from './article.service';
 
@@ -37,18 +39,21 @@ export class ArticleController {
   }
 
   @Get()
+  @UseFilters(new HttpExceptionFilter())
   async findAll(): Promise<Article[]> {
     return this.articleService.findAll();
   }
 
   @Get(':id')
   @ApiParam({ name: 'id', type: String })
+  @UseFilters(new HttpExceptionFilter())
   async findById(@Param() params) {
     return this.articleService.findById(params.id);
   }
 
   @Delete(':id')
   @ApiParam({ name: 'id', type: String })
+  @UseFilters(new HttpExceptionFilter())
   async delete(@Param() params) {
     return this.articleService.deleteArticle(params.id);
   }
@@ -56,6 +61,7 @@ export class ArticleController {
   @Put(':id')
   @ApiParam({ name: 'id', type: String })
   @ApiBody({ required: true, type: Object })
+  @UseFilters(new HttpExceptionFilter())
   async update(@Param() params, @Body() data) {
     return this.articleService.updateArticle(params.id, data);
   }
