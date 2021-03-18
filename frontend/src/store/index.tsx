@@ -3,8 +3,13 @@ import React, { createContext, useReducer, useState } from 'react';
 const userReducer = (state: any, action: any) => {
   switch (action.type) {
     case 'LOGIN':
+      sessionStorage.setItem(
+        `user_session_info`,
+        JSON.stringify(action.payload)
+      );
       return action.payload;
     case 'LOGOUT':
+      sessionStorage.removeItem(`user_session_info`);
       return null;
     default:
       return state;
@@ -14,12 +19,9 @@ const userReducer = (state: any, action: any) => {
 export const ConsumerContext = createContext<any>({});
 
 const ConsumerStore = (props: any) => {
-  const [username, setUsername] = useState('游客'); //示例 state
   const [user, userDispatch] = useReducer(userReducer, null); //示例 reducer
   const [hasLogin, setHasLogin] = useState(false);
   const store = {
-    username,
-    setUsername,
     user,
     userDispatch,
     hasLogin,

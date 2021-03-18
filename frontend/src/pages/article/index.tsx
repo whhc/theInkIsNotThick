@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import ReactMarkdown from 'react-markdown';
 import ReactMde from 'react-mde';
-import articleApi from '../../api';
+import api from 'src/api';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import 'react-mde/lib/styles/css/react-mde-all.css';
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -41,7 +41,7 @@ function ArticlePage(props: any) {
   );
   useEffect(() => {
     if (articleId && articleId !== 'new') {
-      articleApi.getArticle(articleId).then((res) => {
+      api.getArticle(articleId).then((res) => {
         if (res.status === 200) {
           setTitle(res.data.title);
           setArticle(res.data.content);
@@ -58,7 +58,7 @@ function ArticlePage(props: any) {
   const handleUpdate = () => {
     const t = new Date();
     !isNewArticle &&
-      articleApi
+      api
         .putArticle(articleId, {
           userId: user._id,
           content: article,
@@ -73,10 +73,11 @@ function ArticlePage(props: any) {
         });
 
     isNewArticle &&
-      articleApi
+      api
         .postArticle({
           content: article,
           title: title,
+          userId: user._id,
           date: `${t.toLocaleDateString()}  ${t.toLocaleTimeString()}`,
         })
         .then((res) => {
@@ -96,8 +97,7 @@ function ArticlePage(props: any) {
   };
 
   const handleDelete = () => {
-    console.log(articleId);
-    articleApi.deleteArticle(articleId).then((res) => {
+    api.deleteArticle(articleId).then((res) => {
       console.log(res);
       if (res.status === 200) {
         history.goBack();
@@ -116,7 +116,7 @@ function ArticlePage(props: any) {
           )}
           {edit && (
             <TextField
-              defaultValue={title}
+              value={title}
               placeholder={`请输入标题`}
               onChange={(e) => setTitle(e.target.value)}
             ></TextField>

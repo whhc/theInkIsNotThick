@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router';
 import ArticlesPage from './pages/Articles';
 import ArticlePage from './pages/Article';
@@ -12,7 +12,15 @@ function App() {
   const handleToggleLoginShow = () => {
     setLoginShow(!loginShow);
   };
+  const { userDispatch, setHasLogin } = useContext(ConsumerContext);
   const { hasLogin } = useContext(ConsumerContext);
+  useEffect(() => {
+    let userSessionInfo = sessionStorage.getItem(`user_session_info`);
+    if (userSessionInfo) {
+      userDispatch({ type: 'LOGIN', payload: JSON.parse(userSessionInfo) });
+      setHasLogin(true);
+    }
+  }, []);
   return (
     <div className="App">
       <HeaderComponent

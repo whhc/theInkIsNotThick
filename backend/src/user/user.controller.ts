@@ -40,7 +40,6 @@ export class UserController {
   @Post('login')
   @ApiBody({ type: LoginUserDto })
   async login(@Body() user) {
-    console.log(user);
     return this.userService.login(user);
   }
 

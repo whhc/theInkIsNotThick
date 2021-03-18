@@ -10,7 +10,7 @@ export const getArticle = (id: string) => {
 };
 
 export const postArticle = (data: NewArticle) => {
-  return http.post('/api/article', { data: data });
+  return http.post('/api/article', { ...data });
 };
 
 export const putArticle = (id: string, data: any) => {
