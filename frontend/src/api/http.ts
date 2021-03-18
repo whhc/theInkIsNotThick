@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { Get, Post, Put } from './api';
+import { Del, Get, Post, Put } from './api';
 
 const axios = Axios.create({
   timeout: 3000,
@@ -37,4 +37,9 @@ const put: Put = async (url, data, config) => {
   return response.data;
 };
 
-export default { post, get, put };
+const del: Del = async (url, data, config) => {
+  const response = await axios.delete(url, { ...data, ...config });
+  return response.data;
+};
+
+export default { post, get, put, del };

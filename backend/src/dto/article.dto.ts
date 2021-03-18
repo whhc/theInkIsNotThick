@@ -11,6 +11,17 @@ export class CreateArticleDto {
 
   @ApiProperty({
     required: true,
+  })
+  userId: string;
+
+  @ApiProperty({
+    required: false,
+    example: ['React', 'TypeScript'],
+  })
+  tags: string[];
+
+  @ApiProperty({
+    required: true,
     example: `2020-03-16`,
   })
   @IsNotEmpty()

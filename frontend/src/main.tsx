@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import ConsumerStore from './store';
 
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode> //为了兼顾material-ui
+  <ConsumerStore>
     <Router>
       <Switch>
         <Route path="/">
@@ -13,6 +15,7 @@ ReactDOM.render(
         </Route>
       </Switch>
     </Router>
-  </React.StrictMode>,
+  </ConsumerStore>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );

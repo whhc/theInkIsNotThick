@@ -1,32 +1,38 @@
-import { Button } from '@material-ui/core';
-import React from 'react';
-import { Route, Switch, useHistory } from 'react-router';
-import ArticlesPage from './pages/articles';
-import ArticlePage from './pages/article';
+import React, { useContext, useState } from 'react';
+import { Route, Switch } from 'react-router';
+import ArticlesPage from './pages/Articles';
+import ArticlePage from './pages/Article';
 import UserPage from './pages/user';
+import HeaderComponent from './components/Header';
+import Login from './components/Login';
+import { ConsumerContext } from './store';
 
 function App() {
-  let history = useHistory();
-  const routerTo = (path: string) => {
-    history.push(path);
+  const [loginShow, setLoginShow] = useState(false);
+  const handleToggleLoginShow = () => {
+    setLoginShow(!loginShow);
   };
+  const { hasLogin } = useContext(ConsumerContext);
   return (
     <div className="App">
-      <Button onClick={() => routerTo('/user')}>USER</Button>
-      <Button onClick={() => routerTo('/articles')}>ARTICLES</Button>
+      <HeaderComponent
+        loginShow={loginShow}
+        toggleLoginShow={handleToggleLoginShow}
+      />
       <div>
         <Switch>
           <Route path={`/articles`}>
-            <ArticlesPage />
+            <ArticlesPage hasLogin={hasLogin} />
           </Route>
           <Route path={`/article/:articleId`}>
-            <ArticlePage />
+            <ArticlePage hasLogin={hasLogin} />
           </Route>
           <Route path={`/user`}>
             <UserPage />
           </Route>
         </Switch>
       </div>
+      <Login loginShow={loginShow} toggleLoginShow={handleToggleLoginShow} />
     </div>
   );
 }
