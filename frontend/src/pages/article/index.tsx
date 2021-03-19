@@ -4,9 +4,9 @@ import { useHistory, useParams } from 'react-router';
 import ReactMarkdown from 'react-markdown';
 import ReactMde from 'react-mde';
 import api from 'src/api';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import 'react-mde/lib/styles/css/react-mde-all.css';
-import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { useArticleStyles } from './style';
 import { ConsumerContext } from 'src/store';
 import gfm from 'remark-gfm';
@@ -15,7 +15,11 @@ import { Article } from 'src/type';
 const renderers = {
   code: ({ language, value }: { [k: string]: string }) => {
     return (
-      <SyntaxHighlighter style={dark} language={language} children={value} />
+      <SyntaxHighlighter
+        style={atomOneDark}
+        language={language}
+        children={value}
+      />
     );
   },
 };
@@ -105,7 +109,6 @@ function ArticlePage(props: any) {
             initialRef.current = article;
             localStorage.removeItem(`draft-${articleId}`);
             setEdit(!edit);
-            handleResponse(res.data);
           }
         });
 
@@ -119,7 +122,6 @@ function ArticlePage(props: any) {
         })
         .then((res) => {
           if (res.status === 200) {
-            handleResponse(res.data);
             initialRef.current = article;
             localStorage.removeItem(`draft-${articleId}`);
             setEdit(!edit);
