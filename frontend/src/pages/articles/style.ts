@@ -12,4 +12,15 @@ export const useArticlesStyles = makeStyles({
   actionButton: {
     marginLeft: `auto`,
   },
+  list: {
+    '& + .MuiListItemSecondaryAction-root': {
+      display: `none`,
+    },
+    '& + .MuiListItemSecondaryAction-root:hover': {
+      display: `block`,
+    },
+    '&:hover + .MuiListItemSecondaryAction-root': {
+      display: `block`,
+    },
+  },
 });

@@ -10,6 +10,7 @@ import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useArticleStyles } from './style';
 import { ConsumerContext } from 'src/store';
 import gfm from 'remark-gfm';
+import { Article } from 'src/type';
 
 const renderers = {
   code: ({ language, value }: { [k: string]: string }) => {
@@ -68,13 +69,17 @@ function ArticlePage(props: any) {
     'write'
   );
 
+  const handleResponse = (data: Article) => {
+    setTitle(data.title);
+    setArticle(data.content);
+    setDate(data.date);
+  };
+
   useEffect(() => {
     if (articleId && articleId !== 'new') {
       api.getArticle(articleId).then((res) => {
         if (res.status === 200) {
-          setTitle(res.data.title);
-          setArticle(res.data.content);
-          setDate(res.data.date);
+          handleResponse(res.data);
         }
       });
     } else if (articleId && articleId === 'new') {
@@ -96,12 +101,12 @@ function ArticlePage(props: any) {
           date: `${t.toLocaleDateString()}  ${t.toLocaleTimeString()}`,
         })
         .then((res) => {
-          if (res) {
+          if (res.status === 200) {
             initialRef.current = article;
             localStorage.removeItem(`draft-${articleId}`);
             setEdit(!edit);
+            handleResponse(res.data);
           }
-          console.log(res);
         });
 
     isNewArticle &&
@@ -114,10 +119,12 @@ function ArticlePage(props: any) {
         })
         .then((res) => {
           if (res.status === 200) {
-            console.log(res);
+            handleResponse(res.data);
             initialRef.current = article;
             localStorage.removeItem(`draft-${articleId}`);
             setEdit(!edit);
+            setIsNewArticle(false);
+            history.replace(`/article/${res.data._id}`);
           }
         });
   };

@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
   Post,
   UseFilters,
@@ -40,7 +42,20 @@ export class UserController {
   @Post('login')
   @ApiBody({ type: LoginUserDto })
   async login(@Body() user) {
-    return this.userService.login(user);
+    const _user = await this.userService.login(user);
+    console.log(_user);
+    if (_user) {
+      return _user;
+    } else {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_ACCEPTABLE,
+          message: '密码或者用户名错误',
+          data: null,
+        },
+        HttpStatus.NOT_ACCEPTABLE,
+      );
+    }
   }
 
   @Delete(':id')

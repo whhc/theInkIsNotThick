@@ -10,11 +10,11 @@ export const getArticle = (id: string) => {
 };
 
 export const postArticle = (data: NewArticle) => {
-  return http.post('/api/article', { ...data });
+  return http.post<Article>('/api/article', { ...data });
 };
 
 export const putArticle = (id: string, data: any) => {
-  return http.put(`/api/article/${id}`, data);
+  return http.put<Article>(`/api/article/${id}`, data);
 };
 
 export const deleteArticle = (id: string) => {

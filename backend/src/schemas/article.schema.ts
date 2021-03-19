@@ -6,7 +6,7 @@ export type ArticleDocument = Article & Document;
 
 @Schema()
 export class Article {
-  @Prop({ type: mongoose.Schema.Types.String, minlength: 10 })
+  @Prop({ type: mongoose.Schema.Types.String, minlength: 4 })
   title: string;
 
   @Prop({ type: mongoose.Schema.Types.String })
@@ -18,7 +18,7 @@ export class Article {
   @Prop({ type: mongoose.Schema.Types.ObjectId })
   userId: string;
 
-  @Prop({ type: mongoose.Schema.Types.String, minlength: 20 })
+  @Prop({ type: mongoose.Schema.Types.String, minlength: 8 })
   content: string;
 }
 

@@ -8,7 +8,7 @@ import {
   ListItemText,
   Typography,
 } from '@material-ui/core';
-import { Visibility } from '@material-ui/icons';
+import { CloseOutlined, Visibility } from '@material-ui/icons';
 import { SuccessData } from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
@@ -21,16 +21,28 @@ function ArticlesPage(props: any) {
   const history = useHistory();
   const classes = useArticlesStyles();
   const { hasLogin } = props;
-  useEffect(() => {
+  const getArticles = () => {
     articleApi.getArticles().then((res: SuccessData<Article[]>) => {
       if (res.status === 200) {
         setArticles(res.data);
       }
     });
+  };
+  useEffect(() => {
+    getArticles();
   }, []);
 
   const routerTo = (id: string) => {
     history.push(`/article/${id}`);
+  };
+
+  const handleDelete = (id: string) => {
+    articleApi.deleteArticle(id).then((res) => {
+      if (res.status === 200) {
+        // history.go(0);
+        getArticles();
+      }
+    });
   };
 
   const handleCreateArticle = () => {
@@ -55,16 +67,19 @@ function ArticlesPage(props: any) {
       <List>
         {articles?.map((article: Article) => {
           return (
-            <ListItem button key={article._id}>
+            <ListItem button key={article._id} className={classes.list}>
               <ListItemText
+                onClick={() => routerTo(article._id)}
                 primary={article.title}
                 secondary={article.date}
               ></ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton onClick={() => routerTo(article._id)}>
-                  <Visibility></Visibility>
-                </IconButton>
-              </ListItemSecondaryAction>
+              {hasLogin && (
+                <ListItemSecondaryAction>
+                  <IconButton onClick={() => handleDelete(article._id)}>
+                    <CloseOutlined />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              )}
             </ListItem>
           );
         })}
