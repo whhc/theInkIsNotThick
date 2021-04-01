@@ -11,10 +11,15 @@ export const useArticleStyles = makeStyles({
   header: {
     display: `flex`,
     justifyContent: `space-between`,
-    alignItems: `center`,
+    alignItems: `flex-start`,
     margin: `10px 0`,
+  },
+  actions: {
+    display: `flex`,
+    alignItems: `center`,
   },
   actionButton: {
     marginLeft: `10px`,
+    minWidth: `90px`,
   },
 });

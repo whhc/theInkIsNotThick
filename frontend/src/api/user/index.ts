@@ -1,7 +1,7 @@
 import http from '../http';
 
 export const getUser = (id: string) => {
-  return http.get(`api/user/${id}`);
+  return http.get(`/api/user/${id}`);
 };
 
 export const login = (data: { name: string; password: string }) => {
@@ -10,7 +10,7 @@ export const login = (data: { name: string; password: string }) => {
     email: string;
     gender: string;
     [k: string]: any;
-  }>(`api/user/login`, data);
+  }>(`/api/user/login`, data);
 };
 
 export default { getUser };

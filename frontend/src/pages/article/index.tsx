@@ -208,7 +208,7 @@ function ArticlePage(props: any) {
             {date}
           </Typography>
         </div>
-        <div className="action">
+        <div className={classes.actions}>
           {!edit && (
             <>
               {hasLogin && (

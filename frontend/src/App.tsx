@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Route, Switch } from 'react-router';
+import { Redirect, Route, Switch } from 'react-router';
 import ArticlesPage from './pages/Articles';
 import ArticlePage from './pages/Article';
 import UserPage from './pages/user';
@@ -29,6 +29,9 @@ function App() {
       />
       <div>
         <Switch>
+          <Route path={'/'} exact>
+            <Redirect to="/user"></Redirect>
+          </Route>
           <Route path={`/articles`}>
             <ArticlesPage hasLogin={hasLogin} />
           </Route>

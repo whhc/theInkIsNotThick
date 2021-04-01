@@ -8,20 +8,14 @@ import { CustomerLoggerModule } from './customer-logger/customer-logger.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      'mongodb+srv://dbUser:dbUserPassword@cluster0.zvrcg.mongodb.net/db01',
-      {
-        connectionName: 'article',
-        useFindAndModify: false,
-      },
-    ),
-    MongooseModule.forRoot(
-      'mongodb+srv://dbUser:dbUserPassword@cluster0.zvrcg.mongodb.net/db01',
-      {
-        connectionName: 'user',
-        useFindAndModify: false,
-      },
-    ),
+    MongooseModule.forRoot('mongodb://127.0.0.1:27017/article', {
+      connectionName: 'article',
+      useFindAndModify: false,
+    }),
+    MongooseModule.forRoot('mongodb://127.0.0.1:27017/article', {
+      connectionName: 'user',
+      useFindAndModify: false,
+    }),
     ArticleModule,
     UserModule,
     CustomerLoggerModule,
